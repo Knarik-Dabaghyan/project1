@@ -72,7 +72,6 @@ public class Greetz_nlTest {
     }
     @AfterMethod
     public void quit() throws InterruptedException{
-        Thread.sleep(6000);
         driver.quit();
     }
 
