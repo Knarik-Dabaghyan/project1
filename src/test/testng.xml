@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="mySuite" verbose="1" >
+    <test name="myTest">
+        <classes>
+            <class name="Greetz_nlTest">
+                <methods>
+                    <include name="checkFavorite"/>
+                    <include name="checkTotalAmount"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
