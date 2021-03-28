@@ -13,7 +13,7 @@ import java.util.Random;
 
 public class Sixpm_comTest {
     @Test
-    public void log() throws InterruptedException {
+    public void checkSixpm_com(){
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
         ChromeDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
