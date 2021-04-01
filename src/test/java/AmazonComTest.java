@@ -86,7 +86,7 @@ public class AmazonComTest {
 
     @AfterMethod
     public void driverQuit() {
-        //  driver.quit();
+         driver.quit();
     }
 
 }
