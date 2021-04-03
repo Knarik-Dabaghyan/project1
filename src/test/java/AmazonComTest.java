@@ -28,7 +28,7 @@ public class AmazonComTest {
     }
 
     @Test
-    public void testAmazonCom() {
+    public void testAmazonCom(){
         HomePage homePage = new HomePage(driver);
         homePage.waitUntilPageLoads();
         String expectedText = "deliver to" + "\n" + "armenia";
