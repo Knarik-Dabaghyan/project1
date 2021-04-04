@@ -14,35 +14,35 @@ public class HomePage {
     private WebDriverWait wait;
 
     @FindBy(xpath = "//a[@id='nav-global-location-popover-link']")
-    WebElement locationElementLoc;
+    private WebElement locationElement;
 
     @FindBy(xpath = "//a[@id='nav-hamburger-menu']")
-    WebElement allElementLoc;
+    private WebElement allElement;
 
     @FindBy(xpath = "//div[text()='Kindle E-readers & Books']")
-    WebElement kindleEReadersLoc;
+    private WebElement kindleEReadersElement;
 
     @FindBy(xpath = "//a[text()='Kindle Books']")
-    WebElement kindleBooksLoc;
+    private WebElement kindleBooksElement;
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver, 30);
         PageFactory.initElements(driver, this);
     }
 
     public String getElementText() {
-        String actualText = locationElementLoc.getText().toLowerCase();
+        String actualText = locationElement.getText().toLowerCase();
         return actualText;
     }
 
     public void clickOnFilterElement() {
-        allElementLoc.click();
-        kindleEReadersLoc.click();
-        kindleBooksLoc.click();
+        allElement.click();
+        kindleEReadersElement.click();
+        kindleBooksElement.click();
     }
 
     public void waitUntilPageLoads() {
-        wait.until(ExpectedConditions.visibilityOf(allElementLoc));
+        wait.until(ExpectedConditions.visibilityOf(allElement));
     }
 }

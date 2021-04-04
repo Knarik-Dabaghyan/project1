@@ -16,37 +16,38 @@ public class AuthorPage {
     private WebDriverWait wait;
 
     @FindBy(xpath = "//span[@id='formatSelectorHeader']")
-    WebElement authorPageTextLoc;
+    private WebElement authorPageText;
 
     @FindBy(xpath = "//span[@id='sortBySelectors']")
-    WebElement sortedByElemLoc;
+    private WebElement sortedByElement;
 
     @FindBy(xpath = "//a[@class='a-dropdown-link' and contains(text() ,'Price: Low to High')]")
-    WebElement lowToHighElemLoc;
+    private WebElement lowToHighElement;
 
     @FindBy(xpath = "//span[@class='a-size-base a-color-price authorPageCarouselText']")
-    List<WebElement> priceElementLoc;
+    private List<WebElement> priceElement;
 
     public AuthorPage(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver, 30);
         PageFactory.initElements(driver, this);
     }
 
     public void clickOnFilterElement() {
-        sortedByElemLoc.click();
-        lowToHighElemLoc.click();
+        sortedByElement.click();
+        wait.until(ExpectedConditions.visibilityOf(lowToHighElement));
+        lowToHighElement.click();
     }
 
     public String getElementText() {
-        String actualText = authorPageTextLoc.getText().toLowerCase();
+        String actualText = authorPageText.getText().toLowerCase();
         return actualText;
     }
 
     public boolean isLowToHighPrice() {
         boolean isLowToHigh = false;
         LinkedList<Double> priceList = new LinkedList<>();
-        List<WebElement> priceTextList = priceElementLoc;
+        List<WebElement> priceTextList = priceElement;
         for (int i = 0; i < priceTextList.size(); i++) {
             String priceProduct = priceTextList.get(i).getText().replaceAll("[^.0-9]", "");
             double actualPrice = Double.parseDouble(priceProduct);
@@ -58,13 +59,13 @@ public class AuthorPage {
 
             }
         }
-
         return isLowToHigh;
     }
 
     public void waitUntilPageLoads() {
-        wait.until(ExpectedConditions.visibilityOf(authorPageTextLoc));
-        wait.until(ExpectedConditions.visibilityOf(sortedByElemLoc));
+        wait.until(ExpectedConditions.visibilityOf(authorPageText));
+        wait.until(ExpectedConditions.visibilityOf(sortedByElement));
+
 
     }
 }

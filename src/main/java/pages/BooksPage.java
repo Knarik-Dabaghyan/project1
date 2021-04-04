@@ -15,25 +15,19 @@ public class BooksPage {
     private WebDriverWait wait;
 
     @FindBy(xpath = "//input[@aria-label='Search']")
-    WebElement searchElementLoc;
+    private WebElement searchElement;
 
     public BooksPage(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver, 30);
         PageFactory.initElements(driver, this);
     }
 
-    public void clickOnFilterElement() {
-        searchElementLoc.click();
-
-    }
-
     public void searchElement() {
-        searchElementLoc.sendKeys("Albert Woodfox" + Keys.ENTER);
-
+        searchElement.sendKeys("Albert Woodfox" + Keys.ENTER);
     }
 
     public void waitUntilPageLoads() {
-        wait.until(ExpectedConditions.visibilityOf(searchElementLoc));
+        wait.until(ExpectedConditions.visibilityOf(searchElement));
     }
 }

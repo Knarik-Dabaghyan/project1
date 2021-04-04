@@ -14,6 +14,7 @@ import pages.*;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 
 public class AmazonComTest {
 
@@ -28,7 +29,7 @@ public class AmazonComTest {
     }
 
     @Test
-    public void testAmazonCom(){
+    public void testAmazonCom() {
         HomePage homePage = new HomePage(driver);
         homePage.waitUntilPageLoads();
         String expectedText = "deliver to" + "\n" + "armenia";
@@ -37,7 +38,6 @@ public class AmazonComTest {
         homePage.clickOnFilterElement();
         BooksPage booksPage = new BooksPage(driver);
         booksPage.waitUntilPageLoads();
-        booksPage.clickOnFilterElement();
         booksPage.searchElement();
         AuthorBooksPage authorBooksPage = new AuthorBooksPage(driver);
         authorBooksPage.waitUntilPageLoads();
@@ -46,7 +46,7 @@ public class AmazonComTest {
         Assert.assertTrue(isContain, "There is no book that Author is " + expectedSearch);
         AuthorPage authorPage = new AuthorPage(driver);
         authorPage.waitUntilPageLoads();
-        String textExpected = "books by albert woodfox";
+        String textExpected = "titles by albert woodfox";
         String textActual = authorPage.getElementText();
         Assert.assertEquals(textActual, textExpected, "Expected text not equal actual text");
         authorPage.clickOnFilterElement();
