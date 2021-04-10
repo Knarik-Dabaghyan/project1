@@ -1,6 +1,5 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,14 +10,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BooksPage {
 
-    private WebDriver driver;
     private WebDriverWait wait;
 
     @FindBy(xpath = "//input[@aria-label='Search']")
     private WebElement searchElement;
 
     public BooksPage(WebDriver driver) {
-        this.driver = driver;
         wait = new WebDriverWait(driver, 30);
         PageFactory.initElements(driver, this);
     }

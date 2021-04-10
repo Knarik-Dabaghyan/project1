@@ -1,6 +1,5 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,7 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class AuthorPage {
-    private WebDriver driver;
     private WebDriverWait wait;
 
     @FindBy(xpath = "//span[@id='formatSelectorHeader']")
@@ -28,14 +26,13 @@ public class AuthorPage {
     private List<WebElement> priceElement;
 
     public AuthorPage(WebDriver driver) {
-        this.driver = driver;
         wait = new WebDriverWait(driver, 30);
         PageFactory.initElements(driver, this);
     }
 
-    public void clickOnFilterElement() {
+    public void clickOnElements() {
         sortedByElement.click();
-        wait.until(ExpectedConditions.visibilityOf(lowToHighElement));
+        wait.until(ExpectedConditions.elementToBeClickable(lowToHighElement));
         lowToHighElement.click();
     }
 
@@ -56,8 +53,8 @@ public class AuthorPage {
         for (int i = 0; i < priceList.size() - 1; i++) {
             if (priceList.get(i) <= priceList.get(i + 1)) {
                 isLowToHigh = true;
-
-            }
+            } else isLowToHigh = false;
+            break;
         }
         return isLowToHigh;
     }

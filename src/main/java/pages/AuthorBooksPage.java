@@ -1,6 +1,5 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,7 +11,6 @@ import java.util.List;
 
 public class AuthorBooksPage {
 
-    private WebDriver driver;
     private WebDriverWait wait;
 
     @FindBy(xpath = "//div[@class='s-main-slot s-result-list s-search-results sg-row']")
@@ -22,19 +20,19 @@ public class AuthorBooksPage {
     private List<WebElement> authorNameElement;
 
     public AuthorBooksPage(WebDriver driver) {
-        this.driver = driver;
         wait = new WebDriverWait(driver, 30);
         PageFactory.initElements(driver, this);
     }
 
-    public boolean isContainText(String expectedSearch) {
+    public boolean ContainsTextAndClick(String expectedSearch) {
         List<WebElement> list = authorNameElement;
         boolean isContain = false;
         for (int i = 0; i < list.size(); i++) {
             String linkText = list.get(i).getText().toLowerCase();
+            System.out.println(linkText);
             if (linkText.contains(expectedSearch)) {
-                isContain = true;
                 list.get(i).click();
+                isContain = true;
                 break;
             }
         }

@@ -1,6 +1,5 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,7 +9,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage {
 
-    private WebDriver driver;
     private WebDriverWait wait;
 
     @FindBy(xpath = "//a[@id='nav-global-location-popover-link']")
@@ -26,7 +24,6 @@ public class HomePage {
     private WebElement kindleBooksElement;
 
     public HomePage(WebDriver driver) {
-        this.driver = driver;
         wait = new WebDriverWait(driver, 30);
         PageFactory.initElements(driver, this);
     }
@@ -36,7 +33,7 @@ public class HomePage {
         return actualText;
     }
 
-    public void clickOnFilterElement() {
+    public void clickOnElements() {
         allElement.click();
         kindleEReadersElement.click();
         kindleBooksElement.click();
