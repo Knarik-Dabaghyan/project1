@@ -41,30 +41,15 @@ public class AmazonComTest {
         booksPage.searchElement();
         AuthorBooksPage authorBooksPage = new AuthorBooksPage(driver);
         authorBooksPage.waitUntilPageLoads();
-        boolean isContain = authorBooksPage.ContainsTextAndClick(expectedSearch);
+        boolean isContain = authorBooksPage.containsTextAndClick(expectedSearch);
         Assert.assertTrue(isContain, "There is no book that Author is " + expectedSearch);
         AuthorPage authorPage = new AuthorPage(driver);
         authorPage.waitUntilPageLoads();
         String textActual = authorPage.getElementText();
         Assert.assertEquals(textActual, textExpected, "Expected text is: " + textExpected + "and not equal actual text that is :" + textActual);
-        authorPage.clickOnElements();
+        authorPage.clickOnSortedElements();
         boolean isLowToHigh = authorPage.isLowToHighPrice();
         Assert.assertTrue(isLowToHigh, "Prices are not sorted from low to high");
-    }
-
-    static class DataGenerator {
-        @DataProvider(name = "amazonDataProvider")
-        public static Object[][] amazonDataProviderMethod() throws IOException, ParseException {
-            Object[][] params = new Object[1][2];
-            JSONArray paramsJSON = (JSONArray) (new JSONParser().parse(
-                    new FileReader("src/test/resources/parameter.json")));
-            for (int i = 0; i < paramsJSON.size(); i++) {
-                params[i][0] = ((JSONObject) paramsJSON.get(i)).get("expectedSearch");
-                params[i][1] = ((JSONObject) paramsJSON.get(i)).get("textExpected");
-            }
-            return params;
-
-        }
     }
 
     @AfterMethod

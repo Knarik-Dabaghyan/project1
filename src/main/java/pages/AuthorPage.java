@@ -30,7 +30,7 @@ public class AuthorPage {
         PageFactory.initElements(driver, this);
     }
 
-    public void clickOnElements() {
+    public void clickOnSortedElements() {
         sortedByElement.click();
         wait.until(ExpectedConditions.elementToBeClickable(lowToHighElement));
         lowToHighElement.click();
@@ -53,8 +53,10 @@ public class AuthorPage {
         for (int i = 0; i < priceList.size() - 1; i++) {
             if (priceList.get(i) <= priceList.get(i + 1)) {
                 isLowToHigh = true;
-            } else isLowToHigh = false;
-            break;
+            } else {
+                isLowToHigh = false;
+                break;
+            }
         }
         return isLowToHigh;
     }

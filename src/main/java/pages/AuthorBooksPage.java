@@ -24,7 +24,7 @@ public class AuthorBooksPage {
         PageFactory.initElements(driver, this);
     }
 
-    public boolean ContainsTextAndClick(String expectedSearch) {
+    public boolean containsTextAndClick(String expectedSearch) {
         List<WebElement> list = authorNameElement;
         boolean isContain = false;
         for (int i = 0; i < list.size(); i++) {
