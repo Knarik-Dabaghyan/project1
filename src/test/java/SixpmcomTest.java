@@ -55,15 +55,14 @@ public class SixpmcomTest {
         double actualPrice = Double.parseDouble(priceProduct);
         Assert.assertEquals(expectedModel, actualModel, "Expected model not equal actual model");
         Assert.assertEquals(expectedPrice, actualPrice, "Expected amount not equal actual amount");
-      
-    }
-
-    @AfterMethod
-    public void driverQuit() {
         driver.findElement(By.xpath("//select[@name='quantity']")).click();
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//option[text()='Remove']"))).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='NB-z']")));
 
+    }
+
+    @AfterMethod
+    public void driverQuit() {
         driver.quit();
     }
 }
