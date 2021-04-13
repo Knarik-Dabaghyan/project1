@@ -47,7 +47,7 @@ public class RestTest {
                 .when()
                 .post("users")
                 .then()
-                .spec(getResponseSpec());
+                .spec(getResponseSpecification());
 
         JsonPath jsonPath = response
                 .extract()
@@ -78,7 +78,7 @@ public class RestTest {
                 .when()
                 .delete("users/{id}", userId)
                 .then()
-                .spec(getResponseSpec());
+                .spec(getResponseSpecification());
 
         Assert.assertEquals(200, response.extract().statusCode());
 
@@ -111,7 +111,7 @@ public class RestTest {
                 .when()
                 .post("users")
                 .then()
-                .spec(getResponseSpec());
+                .spec(getResponseSpecification());
 
         JsonPath jsonPath = response
                 .extract()
@@ -129,7 +129,7 @@ public class RestTest {
                 .build();
     }
 
-    private ResponseSpecification getResponseSpec() {
+    private ResponseSpecification getResponseSpecification() {
         ResponseSpecBuilder specBuilder = new ResponseSpecBuilder();
         return specBuilder
                 .expectContentType(ContentType.JSON)
