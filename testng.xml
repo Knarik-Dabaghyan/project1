@@ -9,6 +9,7 @@
                     <include name="checkTotalAmount"/>
                 </methods>
             </class>
+            <class name="RestTest"/>
         </classes>
     </test>
 </suite>
