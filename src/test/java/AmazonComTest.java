@@ -1,19 +1,20 @@
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+import groovy.json.JsonParser;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.*;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class AmazonComTest {
 
@@ -27,29 +28,26 @@ public class AmazonComTest {
         driver.get("https://www.amazon.com/");
     }
 
-    @Test
-    public void testAmazonCom() {
+    @Test(dataProvider = "amazonDataProvider", dataProviderClass = DataGenerator.class)
+    public void testAmazonCom(String expectedSearch, String textExpected) {
         HomePage homePage = new HomePage(driver);
         homePage.waitUntilPageLoads();
         String expectedText = "deliver to" + "\n" + "armenia";
         String actualText = homePage.getElementText();
         Assert.assertEquals(actualText, expectedText, "Actual text is not equal expected text");
-        homePage.clickOnFilterElement();
+        homePage.clickOnElements();
         BooksPage booksPage = new BooksPage(driver);
         booksPage.waitUntilPageLoads();
-        booksPage.clickOnFilterElement();
         booksPage.searchElement();
         AuthorBooksPage authorBooksPage = new AuthorBooksPage(driver);
         authorBooksPage.waitUntilPageLoads();
-        String expectedSearch = "albert woodfox";
-        boolean isContain = authorBooksPage.isContainText(expectedSearch);
+        boolean isContain = authorBooksPage.containsTextAndClick(expectedSearch);
         Assert.assertTrue(isContain, "There is no book that Author is " + expectedSearch);
         AuthorPage authorPage = new AuthorPage(driver);
         authorPage.waitUntilPageLoads();
-        String textExpected = "books by albert woodfox";
         String textActual = authorPage.getElementText();
-        Assert.assertEquals(textActual, textExpected, "Expected text not equal actual text");
-        authorPage.clickOnFilterElement();
+        Assert.assertEquals(textActual, textExpected, "Expected text is: " + textExpected + "and not equal actual text that is :" + textActual);
+        authorPage.clickOnSortedElements();
         boolean isLowToHigh = authorPage.isLowToHighPrice();
         Assert.assertTrue(isLowToHigh, "Prices are not sorted from low to high");
     }

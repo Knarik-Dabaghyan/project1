@@ -1,8 +1,9 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -10,32 +11,40 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class AuthorPage {
-    private WebDriver driver;
-    private By authorPageContentLoc = By.xpath("//span[@id='sortBySelectors']");
-    private By authorPageTextLoc = By.xpath("//span[@id='formatSelectorHeader']");
-    private By sortedByElemLoc = By.xpath("//span[@id='sortBySelectors']");
-    private By lowToHighElemLoc = By.xpath("//a[@class='a-dropdown-link' and contains(text() ,'Price: Low to High')]");
+    private WebDriverWait wait;
 
+    @FindBy(xpath = "//span[@id='formatSelectorHeader']")
+    private WebElement authorPageText;
+
+    @FindBy(xpath = "//span[@id='sortBySelectors']")
+    private WebElement sortedByElement;
+
+    @FindBy(xpath = "//a[@class='a-dropdown-link' and contains(text() ,'Price: Low to High')]")
+    private WebElement lowToHighElement;
+
+    @FindBy(xpath = "//span[@class='a-size-base a-color-price authorPageCarouselText']")
+    private List<WebElement> priceElement;
 
     public AuthorPage(WebDriver driver) {
-        this.driver = driver;
+        wait = new WebDriverWait(driver, 30);
+        PageFactory.initElements(driver, this);
     }
 
-    public void clickOnFilterElement() {
-        driver.findElement(sortedByElemLoc).click();
-        driver.findElement(lowToHighElemLoc).click();
-
+    public void clickOnSortedElements() {
+        sortedByElement.click();
+        wait.until(ExpectedConditions.elementToBeClickable(lowToHighElement));
+        lowToHighElement.click();
     }
 
     public String getElementText() {
-        String actualText = driver.findElement(authorPageTextLoc).getText().toLowerCase();
+        String actualText = authorPageText.getText().toLowerCase();
         return actualText;
     }
 
     public boolean isLowToHighPrice() {
         boolean isLowToHigh = false;
         LinkedList<Double> priceList = new LinkedList<>();
-        List<WebElement> priceTextList = driver.findElements(By.xpath("//span[@class='a-size-base a-color-price authorPageCarouselText']"));
+        List<WebElement> priceTextList = priceElement;
         for (int i = 0; i < priceTextList.size(); i++) {
             String priceProduct = priceTextList.get(i).getText().replaceAll("[^.0-9]", "");
             double actualPrice = Double.parseDouble(priceProduct);
@@ -44,17 +53,18 @@ public class AuthorPage {
         for (int i = 0; i < priceList.size() - 1; i++) {
             if (priceList.get(i) <= priceList.get(i + 1)) {
                 isLowToHigh = true;
-
+            } else {
+                isLowToHigh = false;
+                break;
             }
         }
-
         return isLowToHigh;
     }
 
     public void waitUntilPageLoads() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(authorPageContentLoc));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(authorPageTextLoc));
+        wait.until(ExpectedConditions.visibilityOf(authorPageText));
+        wait.until(ExpectedConditions.visibilityOf(sortedByElement));
+
 
     }
 }
